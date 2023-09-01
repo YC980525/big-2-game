@@ -1,13 +1,13 @@
 import java.util.*;
 
 public class CardPattern implements Comparable<CardPattern> {
-    enum PatternType {
+    enum Type {
         INVALID ("Invalid"), SINGLE ("Single"), PAIR ("Pair"),
         STRAIGHT ("Straight"), FULLHOUSE("Full House");
 
         private String representation;
 
-        PatternType (String representation) {
+        Type (String representation) {
             this.representation = representation;
         }
 
@@ -18,7 +18,7 @@ public class CardPattern implements Comparable<CardPattern> {
     }
 
     private List<Card> cards;
-    private PatternType patternType;
+    private Type type;
     private Card highestOrderCard;
 
     public CardPattern(List<Card> cards) {
@@ -28,24 +28,32 @@ public class CardPattern implements Comparable<CardPattern> {
 
         switch (this.cards.size()) {
             case 1:
-                patternType = PatternType.SINGLE;
+                type = Type.SINGLE;
                 break;
             case 2:
-                patternType = isPair(cards.get(0), cards.get(1))
-                    ? PatternType.PAIR
-                    : PatternType.INVALID;
+                type = isPair(cards.get(0), cards.get(1))
+                    ? Type.PAIR
+                    : Type.INVALID;
                 break;
             case 5:
-                patternType = (isStraight(cards))
-                    ? PatternType.STRAIGHT
+                type = (isStraight(cards))
+                    ? Type.STRAIGHT
                     : (isFullHouse(cards))
-                        ? PatternType.FULLHOUSE
-                        : PatternType.INVALID;
+                        ? Type.FULLHOUSE
+                        : Type.INVALID;
                 break;
             default:
-                patternType = PatternType.INVALID;
+                type = Type.INVALID;
 
         }
+    }
+
+    public Type getType() {
+        return type;
+    }
+
+    public List<Card> getCards() {
+        return cards;
     }
 
     public Card getHighestOrderCard() {
@@ -112,7 +120,11 @@ public class CardPattern implements Comparable<CardPattern> {
 
     @Override
     public String toString() {
-        return patternType.toString();
+        String representation = "";
+        for (Card card : cards) {
+            representation += card;
+        }
+        return representation;
     }
 
     public static void main(String[] args) {
