@@ -39,39 +39,35 @@ public class Card implements Comparator<Card> {
     private Suit suit;
     private Rank rank;
 
-    Card (String s, String r) {
+    public Card() {};
+
+    public Card(String s, String r) {
         this.suit = setSuit(s);
         this.rank = setRank(r);
     }
 
-    private Suit setSuit(String s) {
-        for (Suit suit : Suit.values()) {
-            if (s == suit.toString()) { return suit; }
-        }
-        throw new IllegalArgumentException("Invalid suit: " + s);
+    public Suit getSuit() {
+        return suit;
     }
 
-    private Rank setRank(String r) {
-        for (Rank rank : Rank.values()) {
-            if (r == rank.toString()) { return rank; }
-        }
-        throw new IllegalArgumentException("Invalid rank: " + r);
+    public Rank getRank() {
+        return rank;
     }
 
     @Override
     public int compare(Card c1, Card c2) {
 
-        if (c1.suit.ordinal() < c2.suit.ordinal()) {
+        if (c1.rank.ordinal() < c2.rank.ordinal()) {
             return -1;
         }
-        else if (c1.suit.ordinal() > c2.suit.ordinal()) {
+        else if (c1.rank.ordinal() > c2.rank.ordinal()) {
             return 1;
         }
         else {
-            if (c1.rank.ordinal() < c2.rank.ordinal()) {
+            if (c1.suit.ordinal() < c2.suit.ordinal()) {
                 return -1;
             }
-            else if (c1.rank.ordinal() > c2.rank.ordinal()) {
+            else if (c1.suit.ordinal() > c2.suit.ordinal()) {
                 return 1;
             }
             else {
@@ -81,7 +77,21 @@ public class Card implements Comparator<Card> {
     }
 
     @Override
-        public String toString() {
-            return this.suit + "[" + this.rank + "]";
+    public String toString() {
+        return suit + "[" + rank + "]";
+    }
+
+    private Suit setSuit(String s) {
+        for (Suit suit : Suit.values()) {
+            if (suit.toString().equals(s)) { return suit; }
         }
+        throw new IllegalArgumentException("Invalid suit: " + s);
+    }
+
+    private Rank setRank(String r) {
+        for (Rank rank : Rank.values()) {
+            if (rank.toString().equals(r)) { return rank; }
+        }
+        throw new IllegalArgumentException("Invalid rank: " + r);
+    }
 }
