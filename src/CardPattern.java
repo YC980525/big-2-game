@@ -24,7 +24,6 @@ public class CardPattern implements Comparable<CardPattern> {
     public CardPattern(List<Card> cards) {
         this.cards = cards;
         Collections.sort(this.cards, new Card());
-        highestOrderCard = cards.get(this.cards.size()-1);
 
         switch (this.cards.size()) {
             case 1:
@@ -44,8 +43,8 @@ public class CardPattern implements Comparable<CardPattern> {
                 break;
             default:
                 type = Type.INVALID;
-
         }
+        setHighestOrderCard();
     }
 
     public Type getType() {
@@ -115,16 +114,22 @@ public class CardPattern implements Comparable<CardPattern> {
 
     @Override
     public int compareTo(CardPattern pattern) {
-        return 0;
+        return new Card().compare(getHighestOrderCard(), pattern.getHighestOrderCard());
     }
 
     @Override
     public String toString() {
         String representation = "";
         for (Card card : cards) {
-            representation += card;
+            representation += card + " ";
         }
-        return representation;
+        return representation.substring(0, representation.length()-1);
+    }
+
+    private void setHighestOrderCard() {
+        if (!(isFullHouse(cards)) && cards.size() != 0) {
+            highestOrderCard = cards.get(cards.size()-1);
+        }
     }
 
     public static void main(String[] args) {

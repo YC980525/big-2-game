@@ -42,8 +42,8 @@ public class Card implements Comparator<Card> {
     public Card() {};
 
     public Card(String s, String r) {
-        this.suit = setSuit(s);
-        this.rank = setRank(r);
+        setSuit(s);
+        setRank(r);
     }
 
     public Suit getSuit() {
@@ -81,16 +81,22 @@ public class Card implements Comparator<Card> {
         return suit + "[" + rank + "]";
     }
 
-    private Suit setSuit(String s) {
+    private void setSuit(String s) {
         for (Suit suit : Suit.values()) {
-            if (suit.toString().equals(s)) { return suit; }
+            if (suit.toString().equals(s)) {
+                this.suit = suit;
+                return;
+            }
         }
         throw new IllegalArgumentException("Invalid suit: " + s);
     }
 
-    private Rank setRank(String r) {
+    private void setRank(String r) {
         for (Rank rank : Rank.values()) {
-            if (rank.toString().equals(r)) { return rank; }
+            if (rank.toString().equals(r)) {
+                this.rank = rank;
+                return;
+            }
         }
         throw new IllegalArgumentException("Invalid rank: " + r);
     }
