@@ -15,5 +15,5 @@ A simple terminal-based Big 2 game crafted in JAVA.
 ## How to Play
 To begin, execute the following command:
 ```sh
-bash src/run.sh
+bash run.sh
 ```
